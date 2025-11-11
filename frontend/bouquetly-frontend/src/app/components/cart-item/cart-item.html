@@ -6,7 +6,11 @@
 
   <div class="item-details">
     <h3 class="item-name">{{ item.name }}</h3>
-    <p class="item-mod">Modification(s): {{ item.modification || 'None' }}</p>
+    <p class="item-mod">
+      Add-ons: 
+      <span *ngIf="item.addOns && item.addOns.length > 0">{{ getAddOnNames() }}</span>
+      <span *ngIf="!item.addOns || item.addOns.length === 0">None</span>
+    </p>
     <p class="item-price">₱{{ item.price | number:'1.0-0' }}</p>
 
     <div class="quantity-controls" role="group" aria-label="Quantity">

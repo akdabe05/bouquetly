@@ -14,18 +14,26 @@ export interface OrderRequest {
     notes: string;
   };
   items: Array<{
-    id: number;
-    name: string;
-    price: number;
+    productId: number;
     quantity: number;
+    price: number;
   }>;
-  total: number;
 }
 
 export interface OrderResponse {
-  success: boolean;
-  orderId: number;
-  message: string;
+  id: number;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  deliveryAddress: string;
+  city: string;
+  postalCode: string;
+  paymentMethod: string;
+  specialNotes: string;
+  totalAmount: number;
+  orderStatus: string;
+  orderDate: string;
+  updatedAt: string;
 }
 
 @Injectable({

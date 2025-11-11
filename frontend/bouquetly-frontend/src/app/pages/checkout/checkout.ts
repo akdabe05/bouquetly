@@ -54,12 +54,11 @@ export class Checkout implements OnInit {
       const orderData = {
         customer: this.customerDetails,
         items: this.cartItems.map(item => ({
-          id: item.id,
-          name: item.name,
+          productId: item.id,
           price: item.price,
-          quantity: item.quantity
-        })),
-        total: this.getTotal()
+          quantity: item.quantity,
+          addOns: item.addOns || []
+        }))
       };
 
       console.log('📦 Sending order data:', orderData);
@@ -67,7 +66,7 @@ export class Checkout implements OnInit {
       this.orderService.createOrder(orderData).subscribe({
         next: (response) => {
           console.log('✅ Order created:', response);
-          alert(`Order placed successfully! 🎉\nOrder ID: ${response.orderId}`);
+          alert(`Order placed successfully! 🎉\nOrder ID: ${response.id}`);
           
           this.cartService.clearCart();
           this.router.navigate(['/']);

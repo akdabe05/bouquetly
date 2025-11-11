@@ -8,6 +8,8 @@ export interface CartItem {
   quantity: number;
   imageUrl: string;
   selected: boolean;
+  addOns?: { name: string; price: number }[];  // Array of add-on objects
+  modification?: string;  // Keep for backward compatibility
 }
 
 @Injectable({

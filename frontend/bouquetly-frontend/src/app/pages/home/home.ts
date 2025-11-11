@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { ProductCard } from '../../components/product-card/product-card';
@@ -24,7 +23,6 @@ export class Home implements OnInit, OnDestroy {
   intervalId: any;
 
   constructor(
-    private http: HttpClient,
     private productService: ProductService
   ) {}
 
@@ -34,19 +32,18 @@ export class Home implements OnInit, OnDestroy {
   }
 
   loadBestSellers() {
-this.http.get<Product[]>('http://localhost:3000/api/products/top')
-  .subscribe({
-    next: (products) => {
-      this.bestSellers = products.map(p => ({
-        ...p,
-        orders_count: p.orders_count
-      }));
-    },
-    error: (err) => {
-      console.error('Error loading products:', err);
-    }
-  });
-
+    this.productService.getTopProducts()
+      .subscribe({
+        next: (products) => {
+          this.bestSellers = products.map(p => ({
+            ...p,
+            orders_count: p.ordersCount || p.orders_count  // Map backend ordersCount to frontend field
+          }));
+        },
+        error: (err) => {
+          console.error('Error loading products:', err);
+        }
+      });
   }
 
   startCarousel() {

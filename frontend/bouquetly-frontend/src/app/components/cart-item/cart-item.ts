@@ -17,6 +17,7 @@ export class CartItem {
     quantity: number;
     price: number;
     selected?: boolean;
+    addOns?: { name: string; price: number }[];  // Updated to store full add-on objects
   };
 
   @Output() remove = new EventEmitter<number>();
@@ -43,5 +44,12 @@ export class CartItem {
     const checked = (ev.target as HTMLInputElement).checked;
     this.item.selected = checked;
     this.selectionChange.emit({ id: this.item.id, selected: checked });
+  }
+
+  getAddOnNames(): string {
+    if (!this.item.addOns || this.item.addOns.length === 0) {
+      return '';
+    }
+    return this.item.addOns.map(addOn => addOn.name).join(', ');
   }
 }

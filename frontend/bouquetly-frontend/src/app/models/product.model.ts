@@ -7,6 +7,7 @@ export interface Product {
   image?: string;
   category?: string;
   category_id?: number;
-  orders_count?: number;
+  ordersCount?: number;  // Changed to match backend camelCase
+  orders_count?: number; // Keep for backward compatibility
   orders?: number;
 }

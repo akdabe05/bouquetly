@@ -16,7 +16,7 @@ import { CartService } from '../../services/cart.service';
 export class ProductDetails implements OnInit {
   product!: Product;
   safeImageUrl: string = '/assets/images/fallback.png';
-  selectedAddOns: string[] = [];
+  selectedAddOns: { name: string; price: number }[] = [];
   totalPrice: number = 0;
 
   addOns = [
@@ -65,10 +65,10 @@ next: (data) => {
   toggleAddOn(addOn: any, event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
-      this.selectedAddOns.push(addOn.name);
+      this.selectedAddOns.push({ name: addOn.name, price: addOn.price });
       this.totalPrice += addOn.price;
     } else {
-      this.selectedAddOns = this.selectedAddOns.filter(a => a !== addOn.name);
+      this.selectedAddOns = this.selectedAddOns.filter(a => a.name !== addOn.name);
       this.totalPrice -= addOn.price;
     }
   }
@@ -82,7 +82,8 @@ addToCart(): void {
     price: this.totalPrice,
     quantity: 1,
     imageUrl: this.safeImageUrl,
-    selected: true
+    selected: true,
+    addOns: [...this.selectedAddOns]  // Include selected add-ons
   });
 
   alert(`${this.product.name} has been added to your cart! 🎉`);
