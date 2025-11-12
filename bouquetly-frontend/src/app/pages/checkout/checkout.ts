@@ -65,14 +65,14 @@ export class Checkout implements OnInit {
 
       this.orderService.createOrder(orderData).subscribe({
         next: (response) => {
-          console.log('✅ Order created:', response);
-          alert(`Order placed successfully! 🎉\nOrder ID: ${response.id}`);
+          console.log('Order created:', response);
+          alert(`Order placed successfully!\nOrder ID: ${response.id}`);
           
           this.cartService.clearCart();
           this.router.navigate(['/']);
         },
         error: (err) => {
-          console.error('❌ Full error details:', err);
+          console.error('Full error details:', err);
           console.error('❌ Error status:', err.status);
           console.error('❌ Error message:', err.message);
           console.error('❌ Error body:', err.error);
